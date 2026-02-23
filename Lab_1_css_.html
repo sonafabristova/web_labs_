@@ -1,0 +1,395 @@
+<html lang="ru">
+<head>
+    <link rel="icon" type="image/svg+xml" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTS3azUjV7VaHKMmB1LCRWAKRWRuhElTUldg&s">
+    <title>Сайт лаба css</title>
+    <meta charset="UTF-8">
+    <style>
+        /* шрифты */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+       
+        :root {
+            --dark-green: #1a3b2e;
+            --light-green: #4a7c5c;
+            --red: #d35c5c;
+            --white: #ffffff;
+            --gray: #666;
+        }
+
+        /* Фон страницы с изображением */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&auto=format');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Затемнение фона */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 59, 46, 0.8);
+            z-index: -1;
+        }
+
+        /* Составной заголовок */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            margin-bottom: 0;
+        }
+
+        /* Форма */
+        form {
+            display: flex;
+            margin-bottom: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--light-green);
+            border-right: none;
+        }
+
+        form button {
+            padding: 15px 25px;
+            border: 2px solid var(--light-green);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        form button[type="Submit"] {
+            background: var(--light-green);
+            color: var(--white);
+            border-left: none;
+        }
+
+        form button[type="Submit"]:hover {
+            background: #3d684b;
+        }
+
+        form button[type="Reset"] {
+            background: var(--red);
+            color: var(--white);
+            border-left: none;
+        }
+
+        form button[type="Reset"]:hover {
+            background: #b84b4b;
+        }
+
+        /* Контейнер для списка */
+        .todo-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Список */
+        ol {
+            list-style: none;
+            width: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            background: transparent;
+            padding: 10px;
+        }
+
+        /* Пункт списка */
+        li {
+            background: var(--white);
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            transition: 0.3s;
+        }
+
+        li:hover {
+            background: #e8f0e8;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        li label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .task-text {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Текст в одну строку с многоточием */
+        .task-text span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Зачёркивание при выборе чекбокса */
+        input[type="checkbox"]:checked + .task-text span {
+            text-decoration: line-through;
+            color: var(--gray);
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+
+        /* Дата */
+        sub {
+            color: var(--gray);
+            font-size: 0.8em;
+            margin-top: 2px;
+        }
+
+        /* Кнопка крестик с анимацией вращения */
+        li button {
+            padding: 5px 10px;
+            background: none;
+            font-size: 18px;
+            color: #999;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        li button:hover {
+            color: var(--red);
+            transform: rotate(90deg);
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            color: var(--white);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        footer hr {
+            border: none;
+            height: 2px;
+            background: var(--light-green);
+            margin-bottom: 20px;
+        }
+
+        /* Для уменьшения экрана */
+        @media (max-width: 500px) {
+            form {
+                flex-direction: column;
+            }
+            
+            input[type="text"] {
+                width: 100%;
+                border-right: 2px solid var(--light-green);
+            }
+            
+            form button {
+                width: 100%;
+                border-left: 2px solid var(--light-green);
+            }
+            
+            .header-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        
+
+        /* Сообщение если нет дел */
+        .empty-message {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--white);
+            border: 2px solid var(--light-green);
+            width: 100%;
+        }
+
+        ol:empty {
+            display: none;
+        }
+
+        ol:empty + .empty-message {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Составной заголовок -->
+    <div class="header">
+        <img class="header-icon" src="https://cdn-icons-png.flaticon.com/512/2917/2917995.png" alt="icon">
+        <h1>Список дел</h1>
+    </div>
+    
+    <form>
+        <input type="text" placeholder="Новый элемент списка" />
+        <button type="Submit">Создать</button>
+        <button type="Reset">Очистить всё</button>
+    </form>
+
+    <div class="todo-container">
+        <ol>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>почесать кошку</span>
+                        <sub>от 01.01.2024</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>полить картошку</span>
+                        <sub>от 01.01.2025</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>сложить в лукошко</span>
+                        <sub>от 01.01.2026</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+            <label>
+                <input type="checkbox">
+                <div class="task-text">
+                    <span>еще одно дело</span>
+                    <sub>от 01.01.2027</sub>
+                </div>
+                <button type="Reset">&#10060;</button>
+            </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще одно</span>
+                        <sub>от 01.01.2028</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2027</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2028</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2027</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2028</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2027</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span>и еще</span>
+                        <sub>от 01.01.2028</sub>
+                    </div>
+                    <button type="Reset">&#10060;</button>
+                </label>
+            </li>
+
+        </ol>
+        <div class="empty-message">Не найдено ни одного дела</div>
+    </div>
+
+    <footer>
+        <hr>
+        <p>Copyright &#169;</p>
+    </footer>
+</body>
+</html>
