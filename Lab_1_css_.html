@@ -4,20 +4,23 @@
     <title>Сайт лаба css</title>
     <meta charset="UTF-8">
     <style>
-        /* шрифты */
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-       
         :root {
             --dark-green: #1a3b2e;
             --light-green: #4a7c5c;
             --red: #d35c5c;
             --white: #ffffff;
             --gray: #666;
+            --light-gray: #e0e0e0;
+            --dark-gray: #4b4848;
         }
 
-        /* Фон страницы с изображением */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&auto=format');
@@ -27,11 +30,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
             padding: 20px;
+            margin: 0;
+            overflow: auto;
         }
 
-        /* Затемнение фона */
         body::before {
             content: '';
             position: fixed;
@@ -43,7 +46,6 @@
             z-index: -1;
         }
 
-        /* Составной заголовок */
         .header {
             display: flex;
             align-items: center;
@@ -51,26 +53,28 @@
             gap: 10px;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         .header-icon {
             width: 40px;
             height: 40px;
-            filter: brightness(0) invert(1);
         }
 
         h1 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Press Start 2P', cursive; 
             color: var(--white);
             margin-bottom: 0;
+            font-size: 1.5em;
+            text-align: center;
         }
 
-        /* Форма */
         form {
             display: flex;
             margin-bottom: 30px;
             max-width: 600px;
             width: 100%;
+            flex-shrink: 0;
         }
 
         input[type="text"] {
@@ -107,42 +111,47 @@
             background: #b84b4b;
         }
 
-        /* Контейнер для списка */
         .todo-container {
             max-width: 600px;
             width: 100%;
+            max-height: 400px;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            background: var(--white);
+            border-radius: 8px;
+          
         }
 
-        /* Список */
         ol {
             list-style: none;
             width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
-            background: transparent;
-            padding: 10px;
+            padding: 0;
+            margin: 0;
         }
 
-        /* Пункт списка */
         li {
             background: var(--white);
-            margin-bottom: 10px;
             padding: 12px 15px;
-            transition: 0.3s;
-        }
-
-        li:hover {
-            background: #e8f0e8;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         li:last-child {
-            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        li:hover {
+            background: var(--light-gray);
+        }
+
+        li:hover button {
+            color: var(--gray);
         }
 
         li label {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 12px;
+            cursor: pointer;
         }
 
         .task-text {
@@ -152,17 +161,35 @@
             min-width: 0;
         }
 
-        /* Текст в одну строку с многоточием */
         .task-text span {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* Зачёркивание при выборе чекбокса */
-        input[type="checkbox"]:checked + .task-text span {
+        .completed-task {
             text-decoration: line-through;
             color: var(--gray);
+        }
+
+        .not-completed-task {
+            text-decoration: none;
+        }
+
+        input[type="checkbox"]:checked ~ .task-text .completed-task {
+            display: inline-block;
+        }
+        
+        input[type="checkbox"]:checked ~ .task-text .not-completed-task {
+            display: none;
+        }
+
+        input[type="checkbox"]:not(:checked) ~ .task-text .completed-task {
+            display: none;
+        }
+        
+        input[type="checkbox"]:not(:checked) ~ .task-text .not-completed-task {
+            display: inline-block;
         }
 
         input[type="checkbox"] {
@@ -171,36 +198,53 @@
             margin-top: 2px;
         }
 
-        /* Дата */
-        sub {
-            color: var(--gray);
-            font-size: 0.8em;
-            margin-top: 2px;
+        li:has(input[type="checkbox"]:checked) {
+            background: var(--dark-gray);
+            border-bottom: 1px solid #4a4a4a;
         }
 
-        /* Кнопка крестик с анимацией вращения */
+        li:has(input[type="checkbox"]:checked):last-child {
+            border-bottom: none;
+        }
+
+        li:has(input[type="checkbox"]:checked) .task-text span,
+        li:has(input[type="checkbox"]:checked) .completed-task,
+        li:has(input[type="checkbox"]:checked) sub,
+        li:has(input[type="checkbox"]:checked) button {
+            color: var(--white);
+        }
+
+        li:has(input[type="checkbox"]:checked):hover {
+            background: var(--dark-gray);
+        }
+
+        sub {
+            color: var(--gray);
+            font-size: 0.75em;
+            margin-top: 4px;
+        }
+
         li button {
-            padding: 5px 10px;
+            padding: 0 8px;
             background: none;
-            font-size: 18px;
-            color: #999;
+            font-size: 22px;
+            color: #000;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         li button:hover {
-            color: var(--red);
             transform: rotate(90deg);
         }
 
-        /* Футер */
         footer {
             text-align: center;
             color: var(--white);
             max-width: 600px;
             width: 100%;
-            margin-top: 40px;
+            margin-top: auto;
+            flex-shrink: 0;
         }
 
         footer hr {
@@ -210,7 +254,6 @@
             margin-bottom: 20px;
         }
 
-        /* Для уменьшения экрана */
         @media (max-width: 500px) {
             form {
                 flex-direction: column;
@@ -232,13 +275,14 @@
             }
             
             h1 {
-                font-size: 1.8em;
+                font-size: 1.2em;
+            }
+            
+            .todo-container {
+                max-height: 300px;
             }
         }
 
-        
-
-        /* Сообщение если нет дел */
         .empty-message {
             display: none;
             text-align: center;
@@ -258,7 +302,6 @@
     </style>
 </head>
 <body>
-    <!-- Составной заголовок -->
     <div class="header">
         <img class="header-icon" src="https://cdn-icons-png.flaticon.com/512/2917/2917995.png" alt="icon">
         <h1>Список дел</h1>
@@ -276,113 +319,123 @@
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>почесать кошку</span>
+                        <span class="not-completed-task">Попечать кнопку</span>
+                        <span class="completed-task">Попечать кнопку</span>
                         <sub>от 01.01.2024</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>полить картошку</span>
+                        <span class="not-completed-task">Полить картошку</span>
+                        <span class="completed-task">Полить картошку</span>
                         <sub>от 01.01.2025</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>сложить в лукошко</span>
+                        <span class="not-completed-task">Сложить в лукошко</span>
+                        <span class="completed-task">Сложить в лукошко</span>
                         <sub>от 01.01.2026</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
-                </label>
-            </li>
-            <li>
-            <label>
-                <input type="checkbox">
-                <div class="task-text">
-                    <span>еще одно дело</span>
-                    <sub>от 01.01.2027</sub>
-                </div>
-                <button type="Reset">&#10060;</button>
-            </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <div class="task-text">
-                        <span>и еще одно</span>
-                        <sub>от 01.01.2028</sub>
-                    </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">еще одно дело</span>
+                        <span class="completed-task">еще одно дело</span>
                         <sub>от 01.01.2027</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">и еще одно</span>
+                        <span class="completed-task">и еще одно</span>
                         <sub>от 01.01.2028</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
                         <sub>от 01.01.2027</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
                         <sub>от 01.01.2028</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
                         <sub>от 01.01.2027</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
                     <div class="task-text">
-                        <span>и еще</span>
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
                         <sub>от 01.01.2028</sub>
                     </div>
-                    <button type="Reset">&#10060;</button>
+                    <button type="Reset">✕</button>
                 </label>
             </li>
-
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
+                        <sub>от 01.01.2027</sub>
+                    </div>
+                    <button type="Reset">✕</button>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <div class="task-text">
+                        <span class="not-completed-task">и еще</span>
+                        <span class="completed-task">и еще</span>
+                        <sub>от 01.01.2028</sub>
+                    </div>
+                    <button type="Reset">✕</button>
+                </label>
+            </li>
         </ol>
         <div class="empty-message">Не найдено ни одного дела</div>
     </div>
