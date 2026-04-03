@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TravelWorld — экспедиции нового поколения</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #ffffff;
+            color: #1e2a3e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 8vw, 5rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            width: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ff7e5e;
+            border-radius: 4px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #1e2a3e;
+        }
+
+        p {
+            color: #4a5568;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #ff7e5e;
+            color: white;
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 8px 20px rgba(255, 110, 64, 0.25);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 110, 64, 0.4);
+            background: #e55a3a;
+        }
+
+        .main-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            transition: all 0.2s;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            cursor: default;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span:first-child {
+            color: #1e2a3e;
+        }
+        .logo span:last-child {
+            color: #ff7e5e;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-weight: 500;
+            color: #2c3e50;
+            transition: all 0.25s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: #ff7e5e;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #ff7e5e;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 5%;
+            scroll-margin-top: 85px;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .section:nth-of-type(odd) {
+            background-color: #fefaf6;
+        }
+        .section:nth-of-type(even) {
+            background-color: #ffffff;
+        }
+
+        .hero-block {
+            background: url("C:/Users/sonaf/Downloads/pic_big.png");
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+        }
+        
+        .hero-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            color: white;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+        }
+
+        .content-row {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .text-column {
+            flex: 1;
+            min-width: 280px;
+        }
+        .content-row .about-img {
+            flex: 1;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+            width: 100%;
+            object-fit: cover;
+            max-height: 450px;
+        }
+        .content-row .about-img:hover {
+            transform: scale(1.02) translateY(-8px);
+            box-shadow: 0 30px 40px -12px rgba(0,0,0,0.25);
+            filter: brightness(1.02) contrast(1.05);
+        }
+
+        .tours-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .tour-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            width: 320px;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .tour-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.2);
+        }
+        .tour-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .tour-card:hover img {
+            transform: scale(1.05);
+        }
+        .tour-card .content {
+            padding: 1.5rem;
+        }
+        .tour-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #ff7e5e;
+        }
+        .tour-price-popular {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #ff7e5e;
+        }
+        .btn-book {
+            background: #ff7e5e;
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-book:hover {
+            background: #e55a3a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(255,110,64,0.3);
+        }
+        .tour-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .carousel-radio {
+            display: none;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -8px rgba(0,0,0,0.2);
+        }
+        
+        .carousel-slider {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            width: 50%;
+            position: relative;
+            height: 480px;
+        }
+        
+        .carousel-slide .carousel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+        }
+        
+        .slide-caption h3 {
+            color: white;
+            font-size: 1.7rem;
+        }
+        
+        .slide-caption p {
+            color: #e0e0e0;
+        }
+        
+       
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .carousel-arrow {
+            pointer-events: auto;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff7e5e;
+            transition: all 0.3s ease;
+            user-select: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .carousel-arrow:hover {
+            background: #ff7e5e;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+     
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 40px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+  
+        .carousel-wrapper #slide1:checked ~ .carousel-container .carousel-slider {
+            transform: translateX(0%);
+        }
+        
+        .carousel-wrapper #slide2:checked ~ .carousel-container .carousel-slider {
+            transform: translateX(-50%);
+        }
+        
+ 
+        .carousel-wrapper #slide1:checked ~ .carousel-container .carousel-dots .carousel-dot:first-child {
+            background: #ff7e5e;
+            transform: scale(1.2);
+        }
+        
+        .carousel-wrapper #slide2:checked ~ .carousel-container .carousel-dots .carousel-dot:last-child {
+            background: #ff7e5e;
+            transform: scale(1.2);
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .review-item {
+            background: white;
+            border-radius: 32px;
+            width: 340px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08);
+        }
+        .review-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.15);
+            background: #fffbf8;
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .review-item:hover .review-avatar {
+            transform: scale(1.05);
+        }
+        .review-content {
+            font-style: normal;
+            line-height: 1.5;
+            color: #2d3748;
+        }
+
+        .moments-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .moments-grid img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 12px 22px -10px rgba(0,0,0,0.1);
+            transition: all 0.35s ease;
+        }
+        .moments-grid img:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 25px 30px -12px rgba(0,0,0,0.25);
+            filter: brightness(1.02) contrast(1.02);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .faq-item {
+            background: #fff;
+            border-radius: 28px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .faq-item:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        .faq-question {
+            background: transparent;
+            padding: 1.3rem 1.8rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.8rem;
+            font-weight: 400;
+            transition: transform 0.2s;
+        }
+        .faq-item[open] .faq-question::after {
+            content: '−';
+        }
+        .faq-answer {
+            padding: 0 1.8rem 1.5rem 1.8rem;
+            color: #4a5568;
+            border-top: 1px solid #f0e7df;
+        }
+
+        .region-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        .region-btn {
+            background: #f0ede8;
+            padding: 0.6rem 1.3rem;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+        .region-btn:hover {
+            background: #ff7e5e;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255,110,64,0.2);
+        }
+        .region-btn.active {
+            background: #ff7e5e;
+            color: white;
+        }
+        .map-container {
+            flex: 1;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.1);
+            background: #f9f4ed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 320px;
+        }
+        .map-container img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.4s;
+        }
+        .map-container:hover img {
+            transform: scale(1.02);
+        }
+
+        .footer {
+            background: #121826;
+            color: #b9c3d0;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        .footer h3 {
+            color: #ff9f7c;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .main-nav {
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                justify-content: center;
+            }
+            .content-row {
+                flex-direction: column;
+            }
+            .map-container {
+                margin-top: 1.5rem;
+            }
+            .section {
+                padding: 60px 5%;
+            }
+            h2:after {
+                width: 60px;
+            }
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+            }
+            .carousel-slide {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <label class="logo">
+            <span>Travel</span><span>World</span>
+        </label>
+        <div class="nav-links">
+            <a href="#about_us" class="nav-link">О нас</a>
+            <a href="#popular" class="nav-link">Направления</a>
+            <a href="#tour" class="nav-link">Туры</a>
+            <a href="#reviews" class="nav-link">Отзывы</a>
+            <a href="#contacts" class="nav-link">Контакты</a>
+        </div>
+    </nav>
+
+    <div class="hero-block">
+        <div class="hero-content">
+            <h1>Откройте мир с TravelWorld</h1>
+            <p>Путешествия, которые вы никогда не забудете</p>
+            <a href="#tour" class="btn-primary">Выбрать тур →</a>
+        </div>
+    </div>
+
+    <div id="about_us" class="section">
+        <div class="container">
+            <h2>О нашем агентстве</h2>
+            <div class="content-row">
+                <div class="text-column">
+                    <h3>Мы создаём незабываемые впечатления</h3>
+                    <p>TravelWorld — это команда профессиональных путешественников, которая уже более 15 лет помогает людям открывать для себя новые страны и культуры. Мы тщательно отбираем каждый тур и направление, чтобы обеспечить вам максимальный комфорт и безопасность во время путешествия.</p>
+                    <p>Наша философия — индивидуальный подход к каждому клиенту. Мы не просто продаём туры, мы создаём уникальные маршруты, которые соответствуют вашим интересам, бюджету и предпочтениям.</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="#contacts" class="btn-primary">Связаться с нами</a>
+                    </div>
+                </div>
+                <img class="about-img" src="C:/Users/sonaf/Downloads/pic1.jpg" alt="Путешествие">
+            </div>
+        </div>
+    </div>
+
+    <div id="best" class="section">
+        <div class="container">
+            <h2>Наши лучшие предложения</h2>
+            
+            <div class="carousel-wrapper">
+                <input type="radio" name="carousel" id="slide1" class="carousel-radio" checked>
+                <input type="radio" name="carousel" id="slide2" class="carousel-radio">
+                
+                <div class="carousel-container">
+                    <div class="carousel-slider">
+                        <div class="carousel-slide">
+                            <img src="C:/Users/sonaf/Downloads/edinbourgh-17393745519359_w687h357.jpg" alt="Эдинбург" class="carousel-img">
+                            <div class="slide-caption">
+                                <h3>Эдинбург, Шотландия</h3>
+                                <p>Столица Шотландии не оставит равнодушными любителей средневековья</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="C:/Users/sonaf/Downloads/Без названия (1).jpeg" alt="Москва" class="carousel-img">
+                            <div class="slide-caption">
+                                <h3>Москва, Россия</h3>
+                                <p>Древняя столица с современным дыханием и величием империи</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-nav">
+                        <label for="slide1" class="carousel-arrow prev">‹</label>
+                        <label for="slide2" class="carousel-arrow next">›</label>
+                    </div>
+                    
+                    <div class="carousel-dots">
+                        <label for="slide1" class="carousel-dot"></label>
+                        <label for="slide2" class="carousel-dot"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popular" class="section">
+        <div class="container">
+            <h2>Популярные направления</h2>
+            <div class="tours-container">
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/Без названия (2).jpeg" alt="Будапешт">
+                    <div class="content">
+                        <h3>Будапешт, Венгрия</h3>
+                        <p>Будапешт - это мосты, дворцы и термальные купальни, многие из которых расположились в фантастически красивых зданиях.</p>
+                        <div class="tour-info">
+                            <span class="tour-price-popular">от $1200</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/Без названия (3).jpeg" alt="Париж">
+                    <div class="content">
+                        <h3>Париж, Франция</h3>
+                        <p>Город любви, искусства и изысканной кухни. Эйфелева башня, Лувр и уютные кафе.</p>
+                        <div class="tour-info">
+                            <span class="tour-price-popular">от $950</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/Без названия (4).jpeg" alt="Нью-Йорк">
+                    <div class="content">
+                        <h3>Нью-Йорк, США</h3>
+                        <p>Город, который никогда не спит. Таймс-сквер, Центральный парк и Статуя Свободы.</p>
+                        <div class="tour-info">
+                            <span class="tour-price-popular">от $1500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tour" class="section">
+        <div class="container">
+            <h2>Наши туры</h2>
+            <div class="tours-container">
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/images.jpeg" alt="Гранд тур">
+                    <div class="content">
+                        <h3>Гранд тур по Европе</h3>
+                        <p>14-дневный тур по 5 странам: Франция, Германия, Австрия, Италия и Швейцария.</p>
+                        <div class="tour-info">
+                            <span class="tour-price">$2500</span>
+                            <button class="btn-book">Забронировать</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/Без названия (5).jpeg" alt="Рио">
+                    <div class="content">
+                        <h3>Рио-де-Жанейро, Бразилия</h3>
+                        <p>Скалистые горы, зелёные холмы и живописные лагуны создают захватывающие панорамы.</p>
+                        <div class="tour-info">
+                            <span class="tour-price">$3200</span>
+                            <button class="btn-book">Забронировать</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tour-card">
+                    <img src="C:/Users/sonaf/Downloads/images (1).jpeg" alt="Япония">
+                    <div class="content">
+                        <h3>Япония: традиции и современность</h3>
+                        <p>12-дневный тур по Токио, Киото, Осака. Чайные церемонии, самурайские замки.</p>
+                        <div class="tour-info">
+                            <span class="tour-price">$2800</span>
+                            <button class="btn-book">Забронировать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviews" class="section">
+        <div class="container">
+            <h2>Отзывы наших клиентов</h2>
+            <div class="reviews-container">
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="C:/Users/sonaf/Downloads/Без названия (6).jpeg" alt="Аватар" class="review-avatar">
+                        <div><h3>Мария Иванова</h3><p>Тур по Италии, май 2025</p></div>
+                    </div>
+                    <p class="review-content">“Это было самое потрясающее путешествие в моей жизни! Организация на высшем уровне. Особенно понравился гид в Риме.”</p>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="C:/Users/sonaf/Downloads/images (2).jpeg" alt="Аватар" class="review-avatar">
+                        <div><h3>Алексей Петров</h3><p>Отдых на Мальдивах, январь 2025</p></div>
+                    </div>
+                    <p class="review-content">“Спасибо TravelWorld за идеально организованный отдых. Отель превзошел ожидания, дайвинг был незабываемым!”</p>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <img src="C:/Users/sonaf/Downloads/Без названия (7).jpeg" alt="Аватар" class="review-avatar">
+                        <div><h3>Елена Смирнова</h3><p>Япония, апрель 2025</p></div>
+                    </div>
+                    <p class="review-content">“Давно мечтала о Японии — TravelWorld сделали мечту реальностью. Цветение сакуры в Киото впечатлило!”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="moments" class="section">
+        <div class="container">
+            <h2>Наши моменты</h2>
+            <div class="moments-grid">
+                <img src="C:/Users/sonaf/Downloads/Без названия (6).jpeg" alt="Момент">
+                <img src="C:/Users/sonaf/Downloads/Без названия (7).jpeg" alt="Момент">
+                <img src="C:/Users/sonaf/Downloads/images (2).jpeg" alt="Момент">
+                <img src="C:/Users/sonaf/Downloads/Без названия (8).jpeg" alt="Момент">
+                <img src="C:/Users/sonaf/Downloads/Без названия (9).jpeg" alt="Момент">
+                <img src="C:/Users/sonaf/Downloads/Без названия (10).jpeg" alt="Момент">
+            </div>
+        </div>
+    </div>
+
+    <div id="faq" class="section">
+        <div class="container">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary class="faq-question">Как забронировать тур?</summary>
+                    <div class="faq-answer"><p>Вы можете забронировать тур онлайн через наш сайт, по телефону или посетив офис. Предоплата 30% от стоимости тура.</p></div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Какие документы нужны для путешествия?</summary>
+                    <div class="faq-answer"><p>Заграничный паспорт (срок действия не менее 6 месяцев) и виза, если требуется. Мы поможем с оформлением.</p></div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Есть ли у вас страховка?</summary>
+                    <div class="faq-answer"><p>Да, мы предлагаем комплексные страховые пакеты: медицинская страховка, от невыезда и потери багажа.</p></div>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Можно ли изменить дату поездки после бронирования?</summary>
+                    <div class="faq-answer"><p>Да, изменение даты возможно, но может повлечь доп. расходы в зависимости от условий авиакомпании.</p></div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <div id="contacts" class="section">
+        <div class="container">
+            <h2>Наши контакты</h2>
+            <div class="content-row">
+                <div class="text-column">
+                    <h3>Свяжитесь с нами, если сможете</h3>
+                    <p> город вы не знаете, улицу не найдёте</p>
+                    <p>+ надежда -номер</p>
+                    <p>голубиную почту уважаем</p>
+                    <p>мы удалёнщики<br/>и в выходные отдыхаем</p>
+                    <div class="region-buttons">
+                        <span class="region-btn active">Европа</span>
+                        <span class="region-btn">Азия</span>
+                        <span class="region-btn">Америка</span>
+                        <span class="region-btn">Африка</span>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <img src="C:/ВКИ/Веб/MAP.svg" alt="Карта">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <h3>TravelWorld</h3>
+        <p>© 2026 TravelWorld. Все права защищены. Ваши проблемы начинаются здесь.</p>
+    </footer>
+</body>
+</html>
