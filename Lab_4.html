@@ -1,0 +1,254 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Лабораторная 4</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f8ff;  /* светлый голубой фон */
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 25px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+                border-bottom: 2px solid #ccc;
+                padding-bottom: 10px;
+            }
+            
+            .task-section {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+            }
+            
+            .task-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            
+            button {
+                background-color: #ddd;
+                color: #333;
+                padding: 8px 16px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s;
+            }
+            
+            button:hover {
+                background-color: #ccc;
+            }
+            
+            .result-area {
+                margin-top: 30px;
+                padding: 15px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+            }
+            
+            .result-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 8px;
+            }
+            
+            #result {
+                color: #2c3e50;
+                font-weight: normal;
+                word-wrap: break-word;
+            }
+        </style>
+        <script>
+            function clearResult() 
+            {
+                document.getElementById("result").textContent = "";
+            }
+
+            // 1
+            function task1() 
+            {
+                clearResult();
+                let name;
+                let admin;
+
+                name = "Джон";
+                admin = name;
+
+                document.getElementById("result").textContent = admin;
+                alert(admin);
+            }
+
+            // 2
+            function task2() 
+            {
+                clearResult();
+                let a = prompt("Первое число?", "");
+                let b = prompt("Второе число?", "");
+
+                let sum = Number(a) + Number(b);
+
+                document.getElementById("result").textContent = sum;
+                alert(sum);
+            }
+
+            // 3
+            function task3() 
+            {
+                clearResult();
+                let result = "";
+                for (let i = 2; i <= 10; i += 2) 
+                {
+                    result += i + " ";
+                }
+                document.getElementById("result").textContent = result.trim();
+            }
+
+            // 4
+            function task4() 
+            {
+                clearResult();
+                let i = 0;
+                while (i < 3) 
+                {
+                    alert(`number ${i}!`);
+                    i++;
+                }
+                document.getElementById("result").textContent = "Цикл завершён (смотрите alert)";
+            }
+
+            // 5
+            function task5() 
+            {
+                clearResult();
+                let num;
+                
+                do 
+                {
+                    num = prompt("Введите число больше 100:", "");
+                    
+                    if (num === null) 
+                    {
+                        document.getElementById("result").textContent = "Ввод отменён пользователем.";
+                        return;
+                    }
+                    
+                    num = Number(num);
+                    
+                    if (isNaN(num) || num <= 100) 
+                    {
+                        alert("Ошибка! Нужно ввести число БОЛЬШЕ 100. Попробуйте снова.");
+                    }
+                    
+                } while (isNaN(num) || num <= 100);
+
+                document.getElementById("result").textContent = `Число ${num} — корректное!`;
+                alert(`Спасибо! Вы ввели ${num}`);
+            }
+
+            // 6
+            function task6() 
+            {
+                clearResult();
+                let input = prompt("Введите число n (поиск простых чисел от 2 до n):", "");
+                if (input === null) 
+                {
+                    document.getElementById("result").textContent = "Ввод отменён.";
+                    return;
+                }
+
+                const n = Number(input);
+                
+                if (isNaN(n) || n < 2) 
+                {
+                    document.getElementById("result").textContent = "Ошибка: введите число больше или равное 2.";
+                    return;
+                }
+                
+                let primes = [];
+
+                for (let i = 2; i <= n; i++) 
+                {
+                    let isPrime = true;
+                    for (let j = 2; j < i; j++) 
+                    {
+                        if (i % j === 0) 
+                        {
+                            isPrime = false;
+                            break;
+                        }
+                    }
+                    if (isPrime) 
+                    {
+                        primes.push(i);
+                    }
+                }
+
+                if (primes.length === 0) 
+                {
+                    document.getElementById("result").textContent = "Простых чисел в этом диапазоне нет.";
+                } 
+                else 
+                {
+                    document.getElementById("result").textContent = primes.join(", ");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Лабораторная работа №4</h1>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 1. Работа с переменными</div>
+                <button onclick="task1()">Выполнить задание 1</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 2. Исправить сложение</div>
+                <button onclick="task2()">Выполнить задание 2</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 3. Вывести чётные числа</div>
+                <button onclick="task3()">Выполнить задание 3</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 4. Заменить for на while</div>
+                <button onclick="task4()">Выполнить задание 4</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 5. Повторять цикл, пока ввод неверен</div>
+                <button onclick="task5()">Выполнить задание 5</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задание 6. Простые числа</div>
+                <button onclick="task6()">Выполнить задание 6</button>
+            </div>
+            
+            <div class="result-area">
+                <div class="result-label">Результат:</div>
+                <span id="result"></span>
+            </div>
+        </div>
+    </body>
+</html>
