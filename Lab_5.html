@@ -1,0 +1,286 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Лабораторная работа №5</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f8ff;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 25px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+                border-bottom: 2px solid #ccc;
+                padding-bottom: 10px;
+            }
+            
+            .task-section {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+            }
+            
+            .task-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            
+            button {
+                background-color: #ddd;
+                color: #333;
+                padding: 8px 16px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s;
+                margin-right: 10px;
+                margin-top: 5px;
+            }
+            
+            button:hover {
+                background-color: #ccc;
+            }
+            
+            .result-area {
+                margin-top: 30px;
+                padding: 15px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+            }
+            
+            .result-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 8px;
+            }
+            
+            #result {
+                color: #2c3e50;
+                font-weight: normal;
+                word-wrap: break-word;
+            }
+        </style>
+        <script>
+            function clearResult() 
+            {
+                document.getElementById("result").textContent = "";
+            }
+
+            // Вернуть число в обратном порядке 
+            function task1() 
+            {
+                clearResult();
+
+                let input = prompt("Введите число:", "123");
+
+                let result = "";
+                for (let i = input.length - 1; i >= 0; i--) 
+                {
+                    result += input[i];
+                }
+
+                document.getElementById("result").textContent = result;
+            }
+
+            // Вернуть число без повторяющихся цифр 
+            function task2() 
+            {
+                clearResult();
+
+                let input = prompt("Введите число:", "111333456");
+
+                let result = "";
+                for (let i = 0; i < input.length; i++) 
+                {
+                    let currentDigit = input[i];
+                    let isAlreadyAdded = false;
+
+                    for (let j = 0; j < result.length; j++) 
+                    {
+                        if (result[j] === currentDigit) 
+                        {
+                            isAlreadyAdded = true;
+                            break;
+                        }
+                    }
+
+                    if (!isAlreadyAdded) 
+                    {
+                        result += currentDigit;
+                    }
+                }
+                
+                document.getElementById("result").textContent = result;
+            }
+
+            // Посчитать, сколько раз в данном числе встречается данная цифра
+            function task3() 
+            {
+                clearResult();
+                
+                let number = prompt("Введите число:", "1355567");
+                let digit = prompt("Введите цифру:", "5");
+
+                let count = 0;
+                for (let i = 0; i < number.length; i++) 
+                {
+                    if (number[i] === digit[0]) 
+                    {
+                        count++;
+                    }
+                }
+
+                document.getElementById("result").textContent = count;
+            }
+
+            // Посчитать самую длинную последовательность нулей/единиц в двоичной записи данного числа.
+            function task4() 
+            {
+                clearResult();
+
+                let input = prompt("Введите число:", "13");
+                let num = Number(input);
+                let binary = num.toString(2);
+
+                let maxQueque = 1;
+                let currentQueque = 1;
+
+                for (let i = 1; i < binary.length; i++) 
+                {
+                    if (binary[i] === binary[i - 1]) 
+                    {
+                        currentQueque++;
+                    } 
+                    else 
+                    {
+                        if (currentQueque > maxQueque) 
+                        {
+                            maxQueque = currentQueque;
+                        }
+                        currentQueque = 1;
+                    }
+                }
+                if (currentQueque > maxQueque) 
+                {
+                    maxQueque = currentQueque;
+                }
+
+                document.getElementById("result").textContent = maxQueque;
+            }
+
+            // Найти самый первый неповторяющийся символ в строке
+            function task5() 
+            {
+                clearResult();
+
+                let str = prompt("Введите строку:", "фывфавыапрс");
+
+                for (let i = 0; i < str.length; i++)
+                {
+                    let char = str[i];
+                    let count = 0;
+                    for (let j = 0; j < str.length; j++) 
+                    {
+                        if (str[j] === char) 
+                        {
+                            count++;
+                        }
+                    }
+                    if (count === 1) 
+                    {
+                        document.getElementById("result").textContent = char;
+                        return;
+                    }
+                }
+
+                document.getElementById("result").textContent = "Нет";
+            }
+
+            // Cгенерировать строку заданной длины из случайных символов, взятых из набора английскийх букв и цифр
+            function task6() 
+            {
+                clearResult();
+
+                let length = prompt("Введите длину строки:", "5");
+
+                length = Number(length);
+
+                let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                let result = "";
+
+                for (let i = 0; i < length; i++) 
+                {
+                    let index = Math.floor(Math.random() * chars.length);
+                    result += chars[index];
+                }
+
+                document.getElementById("result").textContent = result;
+            }
+
+            // Вернуть только уникальные символы строки
+            function task7() 
+            {
+                clearResult();
+
+                let str = prompt("Введите строку:", "позволяеткопироватьтекстиз");
+
+                let result = "";
+                let seen = {};
+
+                for (let i = 0; i < str.length; i++) 
+                {
+                    let char = str[i];
+                    if (!seen[char]) 
+                    {
+                        result += char;
+                        seen[char] = true;
+                    }
+                }
+
+                document.getElementById("result").textContent = result;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Лабораторная работа №5</h1>
+            
+            <div class="task-section">
+                <div class="task-title">Задача 1. Работа с числами</div>
+                <button onclick="task1()">1.1. Число в обратном порядке</button>
+                <button onclick="task2()">1.2. Без повторяющихся цифр</button>
+                <button onclick="task3()">1.3. Сколько раз встречается цифра</button>
+                <button onclick="task4()">1.4. Последовательность нулей/единиц</button>
+            </div>
+            
+            <div class="task-section">
+                <div class="task-title">Задача 2. Работа со строками</div>
+                <button onclick="task5()">2.1. Первый неповторяющийся символ</button>
+                <button onclick="task6()">2.2. Сгенерировать строку</button>
+                <button onclick="task7()">2.3. Только уникальные символы</button>
+            </div>
+            
+            <div class="result-area">
+                <div class="result-label">Результат:</div>
+                <span id="result"></span>
+            </div>
+        </div>
+    </body>
+</html>
