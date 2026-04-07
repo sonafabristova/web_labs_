@@ -5,7 +5,7 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                background-color: #f0f8ff;  /* светлый голубой фон */
+                background-color: #f0f8ff;  
                 margin: 0;
                 padding: 20px;
             }
@@ -69,11 +69,7 @@
                 margin-bottom: 8px;
             }
             
-            #result {
-                color: #2c3e50;
-                font-weight: normal;
-                word-wrap: break-word;
-            }
+           
         </style>
         <script>
             function clearResult() 
@@ -130,7 +126,7 @@
                     alert(`number ${i}!`);
                     i++;
                 }
-                document.getElementById("result").textContent = "Цикл завершён (смотрите alert)";
+                document.getElementById("result").textContent = "Цикл завершён ";
             }
 
             // 5
@@ -145,7 +141,7 @@
                     
                     if (num === null) 
                     {
-                        document.getElementById("result").textContent = "Ввод отменён пользователем.";
+                        document.getElementById("result").textContent = "Ввод не";
                         return;
                     }
                     
@@ -159,7 +155,7 @@
                 } while (isNaN(num) || num <= 100);
 
                 document.getElementById("result").textContent = `Число ${num} — корректное!`;
-                alert(`Спасибо! Вы ввели ${num}`);
+                alert(` Вы ввели ${num}`);
             }
 
             // 6
