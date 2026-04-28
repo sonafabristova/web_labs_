@@ -1,0 +1,338 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Лабораторная работа №6</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f8ff;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 25px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+                border-bottom: 2px solid #ccc;
+                padding-bottom: 10px;
+            }
+            
+            .task-section {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+            }
+            
+            .task-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            
+            button {
+                background-color: #ddd;
+                color: #333;
+                padding: 8px 16px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s;
+                margin-right: 10px;
+                margin-top: 5px;
+            }
+            
+            button:hover {
+                background-color: #ccc;
+            }
+            
+            .result-area {
+                margin-top: 30px;
+                padding: 15px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+            }
+            
+            .result-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 8px;
+            }
+            
+            #result {
+                color: #2c3e50;
+                font-weight: normal;
+                word-wrap: break-word;
+            }
+        </style>
+        <script>
+            function clearResult() 
+            {
+                document.getElementById("result").textContent = "";
+            }
+
+         
+
+            // 1.1
+            function task1_1() 
+            {
+                clearResult();
+                
+              
+                let input = prompt("Введите массив чисел через запятую:", "1, 5, 2, 9, 3");
+            
+                let arr = input.split(',').map(Number);
+             
+                let min = arr[0];
+                let max = arr[0];
+                
+                for (let i = 1; i < arr.length; i++) 
+                {
+                    if (arr[i] < min) min = arr[i];
+                    if (arr[i] > max) max = arr[i];
+                }
+                
+                let result = max - min;
+                
+                document.getElementById("result").textContent = `Массив: [${arr}]\nМаксимальная разница: ${result}`;
+            }
+
+            // 1.2 
+            function task1_2() 
+            {
+                clearResult();
+                
+                let input = prompt("Введите массив чисел через запятую:", "1, 2, 2, 3, 4, 4, 5");
+                let arr = input.split(',').map(Number);
+                
+                let result = [];
+                let seen = {}; //для запоминания встреченных элементов
+                
+                for (let i = 0; i < arr.length; i++) 
+                {
+                    if (!seen[arr[i]]) 
+                    {
+                        result.push(arr[i]);
+                        seen[arr[i]] = true;
+                    }
+                }
+                
+                document.getElementById("result").textContent = `Исходный: [${arr}]\nБез повторов: [${result}]`;
+            }
+
+            // 1.3 
+            function task1_3() 
+            {
+                clearResult();
+               
+                let objects = [
+                    {id: 1, isDone: true}, 
+                    {id: 2, isDone: false},
+                    {id: 3, isDone: true},
+                    {id: 4, isDone: false},
+                    {id: 5, isDone: true}
+                ];
+                
+                let result = [];
+                for (let i = 0; i < objects.length; i++) 
+                {
+                    if (objects[i].isDone === true) 
+                    {
+                        result.push(objects[i]);
+                    }
+                }
+                
+              
+                let resultText = "";
+                for (let i = 0; i < result.length; i++) 
+                {
+                    resultText += `{id: ${result[i].id}, isDone: ${result[i].isDone}} `;
+                }
+                
+                document.getElementById("result").textContent = `Исходные объекты: \n{id:1,isDone:true} {id:2,isDone:false} {id:3,isDone:true} {id:4,isDone:false} {id:5,isDone:true}\n\nОтфильтровано (isDone:true):\n${resultText}`;
+            }
+
+       
+
+            // 2.1 
+            function task2_1() 
+            {
+                clearResult();
+                
+                let input = prompt("Введите массив чисел через запятую:", "1, 4, 6, 3, 2");
+                let arr = input.split(',').map(Number);
+                
+                let threshold = prompt("Введите число для сравнения:", "2");
+                threshold = Number(threshold);
+                
+             
+                let result = [];
+                for (let i = 0; i < arr.length; i++) 
+                {
+                    if (arr[i] > threshold) 
+                    {
+                        result.push(arr[i]);
+                    }
+                }
+                
+                document.getElementById("result").textContent = `Массив: [${arr}]\nЧисло: ${threshold}\nЭлементы больше ${threshold}: [${result}]`;
+            }
+
+            // 2.2 
+            function task2_2() 
+            {
+                clearResult();
+                
+                let nestedArray = [1, 4, [34, 1, 20], [6, [6, 12, 8], 6]];
+                
+               
+                function flatten(arr) 
+                {
+                    let result = [];
+                    
+                    for (let i = 0; i < arr.length; i++) 
+                    {
+                        if (Array.isArray(arr[i])) 
+                        {
+                            let flatPart = flatten(arr[i]);
+                            for (let j = 0; j < flatPart.length; j++) 
+                            {
+                                result.push(flatPart[j]);
+                            }
+                        } 
+                        else 
+                        {
+                           
+                            result.push(arr[i]);
+                        }
+                    }
+                    
+                    return result;
+                }
+                
+                let flatArray = flatten(nestedArray);
+                
+                document.getElementById("result").textContent = `Исходный массив: ${JSON.stringify(nestedArray)}\n\nПлоский массив: [${flatArray}]`;
+            }
+
+          
+
+            // 3.1 
+            function task3_1() 
+            {
+                clearResult();
+                
+                let input = prompt("Введите массив чисел через запятую:", "-7, 12, 4, 6, -4, -12, 0");
+                let arr = input.split(',').map(Number);
+                
+                let count = 0;
+                let used = [];
+                
+                for (let i = 0; i < arr.length; i++) 
+                {
+                  
+                    if (used[i]) continue;
+                    
+                    for (let j = i + 1; j < arr.length; j++) 
+                    {
+                        if (used[j]) continue;
+                        
+                        
+                        if (arr[i] + arr[j] === 0) 
+                        {
+                            count++;
+                            used[i] = true;
+                            used[j] = true;
+                            break; 
+                        }
+                    }
+                }
+                
+                document.getElementById("result").textContent = `Массив: [${arr}]\nКоличество пар, дающих в сумме 0: ${count}`;
+            }
+
+            // 3.2 
+            function task3_2() 
+            {
+                clearResult();
+                
+                let input = prompt("Введите массив чисел через запятую:", "-7, 12, 4, 6, -4, -12, 0");
+                let arr = input.split(',').map(Number);
+                
+                let count = 0;
+                let used = [];
+                
+                for (let i = 0; i < arr.length; i++) 
+                {
+                    if (used[i]) continue;
+                    
+                    for (let j = i + 1; j < arr.length; j++) 
+                    {
+                        if (used[j]) continue;
+                        
+                        for (let k = j + 1; k < arr.length; k++) 
+                        {
+                            if (used[k]) continue;
+                            
+                            
+                            if (arr[i] + arr[j] + arr[k] === 0) 
+                            {
+                                count++;
+                                used[i] = true;
+                                used[j] = true;
+                                used[k] = true;
+                                break; 
+                            }
+                        }
+                    }
+                }
+                
+                document.getElementById("result").textContent = `Массив: [${arr}]\nКоличество троек, дающих в сумме 0: ${count}`;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Лабораторная работа №6</h1>
+            
+            <!-- Задача 1 -->
+            <div class="task-section">
+                <div class="task-title">Задача 1. Работа с массивами</div>
+                <button onclick="task1_1()">1.1. Максимальная разница</button>
+                <button onclick="task1_2()">1.2. Убрать повторяющиеся элементы</button>
+                <button onclick="task1_3()">1.3. Отфильтровать isDone: true</button>
+            </div>
+            
+            <!-- Задача 2 -->
+            <div class="task-section">
+                <div class="task-title">Задача 2. Фильтрация и многомерные массивы</div>
+                <button onclick="task2_1()">2.1. Элементы больше числа</button>
+                <button onclick="task2_2()">2.2. Сделать плоский массив</button>
+            </div>
+            
+            <!-- Задача 3 -->
+            <div class="task-section">
+                <div class="task-title">Задача 3. Поиск сумм</div>
+                <button onclick="task3_1()">3.1. Количество пар, дающих сумму 0</button>
+                <button onclick="task3_2()">3.2. Количество троек, дающих сумму 0</button>
+            </div>
+            
+            <div class="result-area">
+                <div class="result-label">Результат:</div>
+                <span id="result"></span>
+            </div>
+        </div>
+    </body>
+</html>
