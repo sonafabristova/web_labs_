@@ -1,0 +1,498 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Лабораторная работа №7</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f8ff;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 25px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+                border-bottom: 2px solid #ccc;
+                padding-bottom: 10px;
+            }
+            
+            .task-section {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+            }
+            
+            .task-title {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+            
+            button {
+                background-color: #ddd;
+                color: #333;
+                padding: 8px 16px;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s;
+                margin-right: 10px;
+                margin-top: 5px;
+            }
+            
+            button:hover {
+                background-color: #ccc;
+            }
+            
+            .counter-controls {
+                background-color: #e8e8e8;
+                padding: 10px;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+            
+            .result-area {
+                margin-top: 30px;
+                padding: 15px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+            }
+            
+            .result-label {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 8px;
+            }
+            
+            #result {
+                color: #2c3e50;
+                font-weight: normal;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+
+            .counter-value {
+                font-size: 24px;
+                font-weight: bold;
+                color: #007bff;
+                margin-top: 10px;
+            }
+        </style>
+        <script>
+            function clearResult() 
+            {
+                document.getElementById("result").textContent = "";
+            }
+
+          
+
+            // 1.1 счётчик через setInterval
+            function task1_1() 
+            {
+                clearResult();
+                
+                let n = prompt("Введите число для счётчика:", "5");
+                n = Number(n);
+                
+                document.getElementById("result").textContent = `Счётчик: ${n}\n`;
+                
+                let current = n;
+                
+                let intervalId = setInterval(function() 
+                {
+                    if (current >= 0)
+                    {
+                        document.getElementById("result").textContent = `Счётчик: ${current}`;
+                        console.log(current);
+                        current--;
+                    }
+                    
+                    if (current < 0) 
+                    {
+                        clearInterval(intervalId);
+                        document.getElementById("result").textContent = "Счётчик завершён!";
+                        console.log("Счётчик завершён!");
+                    }
+                }, 1000);
+            }
+
+            // 1.2 с методами start, pause, stop 
+            let myCounter = null;
+
+            function createCounter(n) 
+            {
+                let startValue = n;
+                let current = n;
+                let interval = null;
+                let isFinished = false;
+                
+                return {
+                   
+                    create: function(newN) 
+                    {
+                        if (interval !== null) 
+                        {
+                            clearInterval(interval);
+                            interval = null;
+                        }
+                        startValue = newN;
+                        current = newN;
+                        isFinished = false;
+                        document.getElementById("result").textContent = `Счётчик создан: ${current}`;
+                        return this;
+                    },
+                    
+                
+                    start: function() 
+                    {
+                        if (isFinished) 
+                        {
+                            alert("Счётчик уже завершён! Создайте новый (Создать счётчик).");
+                            return;
+                        }
+                        if (interval !== null) 
+                        {
+                            alert("Счётчик уже запущен!");
+                            return;
+                        }
+                        
+                        interval = setInterval(function() 
+                        {
+                            if (current >= 0)
+                            {
+                                document.getElementById("result").textContent = `Счётчик: ${current}`;
+                                console.log(current);
+                                current--;
+                            }
+                            
+                            if (current < 0) 
+                            {
+                                clearInterval(interval);
+                                interval = null;
+                                isFinished = true;
+                                document.getElementById("result").textContent = "Счётчик завершён!";
+                                console.log("Счётчик завершён!");
+                            }
+                        }, 1000);
+                    },
+                  
+                    pause: function() 
+                    {
+                        if (interval !== null) 
+                        {
+                            clearInterval(interval);
+                            interval = null;
+                            document.getElementById("result").textContent = `Счётчик на паузе: ${current + 1}`;
+                            console.log(`Пауза: ${current + 1}`);
+                        } 
+                        else 
+                        {
+                            alert("Счётчик не запущен или уже на паузе!");
+                        }
+                    },
+                    
+                    stop: function() 
+                    {
+                        if (interval !== null) 
+                        {
+                            clearInterval(interval);
+                            interval = null;
+                        }
+                        current = startValue;
+                        isFinished = false;
+                        document.getElementById("result").textContent = `Счётчик сброшен`;
+                        console.log("Счётчик сброшен");
+                    },
+                    
+              
+                   
+                };
+            }
+
+         
+            let counter = createCounter(5);
+
+            function task1_2_create() 
+            {
+                clearResult();
+                let n = prompt("Введите число для счётчика:", "5");
+                n = Number(n);
+                counter.create(n);
+            }
+
+            function task1_2_start() 
+            {
+                counter.start();
+            }
+
+            function task1_2_pause() 
+            {
+                counter.pause();
+            }
+
+            function task1_2_stop() 
+            {
+                counter.stop();
+            }
+
+           
+
+            // 2.1 delay, возвращающая промис
+            function delay(ms) 
+            {
+                return new Promise(function(resolve) 
+                {
+                    setTimeout(resolve, ms);
+                });
+            }
+
+            function task2_1() 
+            {
+                clearResult();
+                let n = prompt("Введите задержку в секундах:", "3");
+                n = Number(n);
+                
+                document.getElementById("result").textContent = `Ждём ${n} секунд...`;
+                
+                delay(n * 1000).then(function() 
+                {
+                    document.getElementById("result").textContent = `Прошло ${n} секунд!`;
+                    console.log(`Прошло ${n} секунд!`);
+                });
+            }
+
+            // 2.2 через delay рекурсивный
+            let isCounterRunning = false;
+            
+            function counterWithDelay(n, callback) 
+            {
+                if (n < 0) 
+                {
+                    document.getElementById("result").textContent = "Счётчик завершён!";
+                    console.log("Счётчик завершён!");
+                    isCounterRunning = false;
+                    if (callback) callback();
+                    return;
+                }
+                
+                document.getElementById("result").textContent = `Счётчик: ${n}`;
+                console.log(n);
+                
+                delay(1000).then(function() 
+                {
+                    if (isCounterRunning) 
+                    {
+                        counterWithDelay(n - 1, callback);
+                    }
+                });
+            }
+
+            function task2_2() 
+            {
+                clearResult();
+                let n = prompt("Введите число для счётчика:", "5");
+                n = Number(n);
+                isCounterRunning = true;
+                counterWithDelay(n, function() 
+                {
+                    isCounterRunning = false;
+                });
+            }
+
+            // 2.3  первый репозиторий пользователя гит
+            function getFirstRepo(username) 
+            {
+                return fetch(`https://api.github.com/users/${username}`)
+                    .then(function(response) 
+                    {
+                        if (response.status === 200) 
+                        {
+                            return response.json();
+                        } 
+                        else if (response.status === 404) 
+                        {
+                            throw new Error("Пользователь не найден!");
+                        } 
+                        else 
+                        {
+                            throw new Error(`Ошибка: ${response.status}`);
+                        }
+                    })
+                    .then(function(userData) 
+                    {
+                        let reposUrl = userData.repos_url;
+                        return fetch(reposUrl);
+                    })
+                    .then(function(response) 
+                    {
+                        return response.json();
+                    })
+                    .then(function(repos) 
+                    {
+                        if (repos.length === 0) 
+                        {
+                            throw new Error("У пользователя нет репозиториев!");
+                        }
+                        return repos[0].name;
+                    });
+            }
+
+            function task2_3() 
+            {
+                clearResult();
+                let username = prompt("Введите имя пользователя GitHub:", "octocat");
+                
+                document.getElementById("result").textContent = `Загрузка данных о пользователе ${username}...`;
+                
+                getFirstRepo(username)
+                    .then(function(repoName) 
+                    {
+                        document.getElementById("result").textContent = `Первый репозиторий пользователя ${username}: ${repoName}`;
+                        console.log(`Первый репозиторий: ${repoName}`);
+                    })
+                    .catch(function(error) 
+                    {
+                        document.getElementById("result").textContent = `Ошибка: ${error.message}`;
+                        console.error(error);
+                    });
+            }
+
+            // 3 асинк
+            class HttpError extends Error 
+            {
+                constructor(response) 
+                {
+                    super(`${response.status} for ${response.url}`);
+                    this.name = 'HttpError';
+                    this.response = response;
+                }
+            }
+
+            async function loadJson(url) 
+            {
+                let response = await fetch(url);
+                
+                if (response.status == 200) 
+                {
+                    return await response.json();
+                } 
+                else 
+                {
+                    throw new HttpError(response);
+                }
+            }
+
+            async function getGithubUser() 
+            {
+                while (true) 
+                {
+                    let name = prompt("Введите логин?", "iliakan");
+                    
+                    try 
+                    {
+                        let user = await loadJson(`https://api.github.com/users/${name}`);
+                        alert(`Полное имя: ${user.name}.`);
+                        document.getElementById("result").textContent = `Пользователь найден: ${user.name} (${user.login})`;
+                        return user;
+                    } 
+                    catch (err) 
+                    {
+                        if (err instanceof HttpError && err.response.status == 404) 
+                        {
+                            alert("Такого пользователя не существует, пожалуйста, повторите ввод.");
+                            document.getElementById("result").textContent = "Пользователь не найден, повторите ввод...";
+                        } 
+                        else 
+                        {
+                            throw err;
+                        }
+                    }
+                }
+            }
+
+            function task3_1() 
+            {
+                clearResult();
+                document.getElementById("result").textContent = "Запуск поиска пользователя...";
+                getGithubUser().catch(function(err) 
+                {
+                    console.error(err);
+                    document.getElementById("result").textContent = `Ошибка: ${err.message}`;
+                });
+            }
+
+           
+            async function asyncCounter(n) 
+            {
+                for (let i = n; i >= 0; i--) 
+                {
+                    document.getElementById("result").textContent = `Счётчик: ${i}`;
+                    console.log(i);
+                    await delay(1000);
+                }
+                document.getElementById("result").textContent = "Счётчик завершён!";
+                console.log("Счётчик завершён!");
+            }
+
+            function task3_2() 
+            {
+                clearResult();
+                let n = prompt("Введите число для счётчика (async/await):", "5");
+                n = Number(n);
+                asyncCounter(n);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Лабораторная работа №7</h1>
+            
+            <!-- Задача 1. Таймеры -->
+            <div class="task-section">
+                <div class="task-title">Задача 1. Таймеры</div>
+                <button onclick="task1_1()">1.1. Простой счётчик (setInterval)</button>
+                <div class="counter-controls">
+                    <strong>Управление счётчиком (1.2):</strong><br>
+                    <button onclick="task1_2_create()">Создать счётчик </button>
+                    <button onclick="task1_2_start()">Запустить</button>
+                    <button onclick="task1_2_pause()">Пауза</button>
+                    <button onclick="task1_2_stop()">Стоп (сброс)</button>
+                </div>
+            </div>
+            
+            <!-- Задача 2. Промисы -->
+            <div class="task-section">
+                <div class="task-title">Задача 2. Промисы</div>
+                <button onclick="task2_1()">2.1. delay (промис с задержкой)</button>
+                <button onclick="task2_2()">2.2. Счётчик через delay</button>
+                <button onclick="task2_3()">2.3. Первый репозиторий GitHub</button>
+            </div>
+            
+            <!-- Задача 3. Async/Await -->
+            <div class="task-section">
+                <div class="task-title">Задача 3. Async/Await</div>
+                <button onclick="task3_1()">3.1. GitHub пользователь (async/await + цикл)</button>
+                <button onclick="task3_2()">3.2. Счётчик через async/await</button>
+            </div>
+            
+            <div class="result-area">
+                <div class="result-label">Результат:</div>
+                <span id="result"></span>
+            </div>
+        </div>
+    </body>
+</html>
